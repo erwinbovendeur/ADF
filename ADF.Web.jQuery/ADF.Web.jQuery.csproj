@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{41D7102F-59C5-4E75-9473-230DA9B3BA3F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Adf.Web.jQuery</RootNamespace>
+    <AssemblyName>ADF.Web.jQuery</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\ADF.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Binding\DateTimeBinder.cs" />
+    <Compile Include="Binding\DateTimePersister.cs" />
+    <Compile Include="Panels\DropDownRenderer.cs" />
+    <Compile Include="Panels\HiddenRenderer.cs" />
+    <Compile Include="Panels\PanelItemExtensions.cs" />
+    <Compile Include="Panels\PanelItemType.cs" />
+    <Compile Include="UI\CheckBox.cs" />
+    <Compile Include="UI\DialogForm.cs" />
+    <Compile Include="UI\RadioButton.cs" />
+    <Compile Include="UI\DropDownList.cs" />
+    <Compile Include="UI\jGrid.cs" />
+    <Compile Include="UI\BreadCrumb.cs" />
+    <Compile Include="UI\ExceptionControl.cs" />
+    <Compile Include="jQueryBase.cs" />
+    <Compile Include="Panels\CalenderRenderer.cs" />
+    <Compile Include="Panels\CheckBoxRenderer.cs" />
+    <Compile Include="Panels\PanelRenderer.cs" />
+    <Compile Include="Panels\RenderException.cs" />
+    <Compile Include="Panels\TextRenderer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\jGrid\Columns.cs" />
+    <Compile Include="UI\jGrid\IconButtonBase.cs" />
+    <Compile Include="UI\JQueryEffect.cs" />
+    <Compile Include="UI\MessageButton.cs" />
+    <Compile Include="UI\PanelEx.cs" />
+    <Compile Include="UI\Styling\jGridStyler.cs" />
+    <Compile Include="UI\Styling\PanelErrorStyler.cs" />
+    <Compile Include="UI\UpdatePanel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\DNA\DNA.JQuery\DNA.UI.JQuery.csproj">
+      <Project>{EC9963C8-76A6-46B3-857C-531B0C4DE2D2}</Project>
+      <Name>DNA.UI.JQuery</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DNA\DNA\DNA.csproj">
+      <Project>{5418193D-42DB-4D27-B795-9C9D79ED5018}</Project>
+      <Name>DNA %28DNA\DNA%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ADF.Base\ADF.Base.csproj">
+      <Project>{E7F721B6-7250-4254-927A-A4F1AD3E6DFE}</Project>
+      <Name>ADF.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ADF.Core\ADF.Core.csproj">
+      <Project>{CE90750E-9F30-4008-B113-321D2D3135CE}</Project>
+      <Name>ADF.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ADF.Web\ADF.Web.csproj">
+      <Project>{A7D55288-375A-4EF9-803B-25916D8176DF}</Project>
+      <Name>ADF.Web</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\ADF.snk">
+      <Link>ADF.snk</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="jquery-form.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="jbreadcrumb.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="jbreadcrumb\Chevron.gif" />
+    <EmbeddedResource Include="jbreadcrumb\ChevronOverlay.png" />
+    <EmbeddedResource Include="jbreadcrumb\IconHome.gif" />
+    <EmbeddedResource Include="jbreadcrumb\jbreadcrumb.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="UI\PanelValidator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="jgrid.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="jquery.multiselect.css" />
+    <EmbeddedResource Include="jquery.multiselect.js" />
+    <EmbeddedResource Include="jquery.checkbox.css" />
+    <EmbeddedResource Include="jquery.checkbox.js" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

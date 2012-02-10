@@ -49,7 +49,7 @@ namespace Adf.Web.State
 			return (this[key] != null);
 		}
 
-		/// <summary>
+		/// <summary>   
         /// Returns a value indicating whether a value exists in the Session corresponding to the 
         /// specified key (combination of the specified object and string).
 		/// </summary>

@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Adf.Test
 {
+    [TestClass]
     public class BaseTest
     {
         [TestInitialize]
@@ -13,21 +14,26 @@ namespace Adf.Test
         {
             TestManager.Clear();
             ValidationManager.Clear();
+
+            OnInitialize();
         }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+        }
+
+        public virtual void OnInitialize() {}
+        public virtual void OnCleanup() {}
     }
 
-    [TestClass]
-    public class BaseTest<T>  where T : ITask
+    public class BaseTest<T> : BaseTest  where T : ITask
     {
-        protected T Task;
+        private T task;
 
-        [TestInitialize]
-        public void Initialize()
+        protected T Task
         {
-            TestManager.Clear();
-            ValidationManager.Clear();
-
-            Task = (T)Activator.CreateInstance(typeof(T), ApplicationTask.Main, null);
+            get { return default(T).Equals(task) ? task : (task = (T) Activator.CreateInstance(typeof (T), ApplicationTask.Main, null)); }
         }
     }
 }

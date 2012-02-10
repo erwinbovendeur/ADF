@@ -26,7 +26,7 @@ namespace Adf.Core.Data
         /// <summary>
         /// Creates an empty list if <see cref="NullInternalState"/>  
         /// </summary>
-        public static readonly IEnumerable<IInternalState> NullList = Enumerable.Empty<NullInternalState>();
+        public static readonly IEnumerable<IInternalState> NullList = Enumerable.Empty<IInternalState>();
 
         /// <summary>
         /// Get the data of specified <see cref="ColumnDescriber"/>.

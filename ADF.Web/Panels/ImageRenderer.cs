@@ -26,7 +26,7 @@ namespace Adf.Web.Panels
 
                 panelItem.Target = image;
 
-                return new List<Control> { image };
+                return new object[] { image };
             }
             if (panelItem.Type == PanelItemType.InfoIcon)
             {
@@ -42,7 +42,7 @@ namespace Adf.Web.Panels
 
                 panelItem.Target = image;
 
-                return new List<Control> { image };
+                return new object[] { image };
             }
 
             return null;

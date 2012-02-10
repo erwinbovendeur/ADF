@@ -50,5 +50,5 @@ namespace Adf.Core.State
     	{
             get { lock(_setLock) return settings ?? (settings = ObjectFactory.BuildUp<IStateProvider>("Settings")); }
     	}
-	}
+    }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Web.UI;
 using System.Web.UI.WebControls;
 using Adf.Core.Panels;
+using Adf.Web.Helper;
 
 namespace Adf.Web.UI
 {
@@ -24,8 +25,7 @@ namespace Adf.Web.UI
 
         protected override void CreateChildControls()
         {
-            var table = PanelManager.Render(Panel) as Table;
-
+            var table = PanelManager.Render(Panel) as Control;
             if (table != null) Controls.Add(table);
         }
     }

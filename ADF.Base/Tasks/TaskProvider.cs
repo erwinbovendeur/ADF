@@ -123,6 +123,8 @@ namespace Adf.Base.Tasks
         {
             ITask task;
 
+            if (id == Guid.Empty) return Task.Empty;
+
             if (!tasks.TryGetValue(id, out task)) throw new TaskNotFoundException();
 
             return task ?? Task.Empty;

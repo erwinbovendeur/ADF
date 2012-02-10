@@ -1,24 +1,22 @@
 using System.Web.UI.WebControls;
 using Adf.Core.Domain;
 using Adf.Core.State;
-using Adf.Web.UI;
-using Adf.Web.UI.SmartView;
 
 namespace Adf.Web
 {
     /// <summary>
-    /// Represents the sorting related service of an <see cref="SmartView"/>.
-    /// Provides methods to sort the records in an <see cref="SmartView"/> etc.
+    /// Represents the sorting related service of an <see cref="GridView"/>.
+    /// Provides methods to sort the records in an <see cref="GridView"/> etc.
     /// </summary>
     class BusinessGridViewSorter : IGridService
     {
         /// <summary>
-        /// Puts the specified <see cref="SmartView"/> into the 
+        /// Puts the specified <see cref="GridView"/> into the 
         /// <see cref="StateManager.Personal"/> i.e. session.
         /// </summary>
-        /// <param name="view">The <see cref="SmartView"/> to put.</param>
+        /// <param name="view">The <see cref="GridView"/> to put.</param>
         /// <param name="p">The parameters to use. Currently not being used.</param>
-        public void InitService(SmartView view, params object[] p)
+        public void InitService(GridView view, params object[] p)
         {
             Grid = view;
         }
@@ -28,12 +26,12 @@ namespace Adf.Web
         /// <summary>
         /// Gets the <see cref="SortDirection"/> according to the value stored in the 
         /// <see cref="StateManager.Personal"/> i.e. session for a particular 
-        /// <see cref="SmartView"/>.
+        /// <see cref="GridView"/>.
         /// </summary>
         /// <returns>
         /// The <see cref="SortDirection"/> according to the value stored in the 
         /// <see cref="StateManager.Personal"/> i.e. session for a particular 
-        /// <see cref="SmartView"/>.
+        /// <see cref="GridView"/>.
         /// </returns>
         public SortDirection SortDirection
         {
@@ -41,26 +39,26 @@ namespace Adf.Web
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="SmartView"/> 
+        /// Gets or sets the <see cref="GridView"/> 
         /// </summary>
         /// <returns>
-        /// The <see cref="SmartView"/> 
+        /// The <see cref="GridView"/> 
         /// </returns>
-        public SmartView Grid { get; set; }
+        public GridView Grid { get; set; }
 //        {
-//            get { return StateManager.Personal["BusinessGridViewSorter"] as SmartView; }
+//            get { return StateManager.Personal["BusinessGridViewSorter"] as GridView; }
 //            set { StateManager.Personal["BusinessGridViewSorter"] = value; }
 //        }
 
         /// <summary>
         /// Gets or sets the last expression stored in the 
         /// <see cref="StateManager.Personal"/> i.e. session for a particular 
-        /// <see cref="SmartView"/>
+        /// <see cref="GridView"/>
         /// </summary>
         /// <returns>
         /// The last expression stored in the 
         /// <see cref="StateManager.Personal"/> i.e. session for a particular 
-        /// <see cref="SmartView"/>
+        /// <see cref="GridView"/>
         /// </returns>
         public string LastExpression
         {
@@ -70,11 +68,11 @@ namespace Adf.Web
 
         /// <summary>
         /// Gets or sets the value indicating whether the 'SortAscending' indicator for a 
-        /// particular <see cref="SmartView"/> is true.
+        /// particular <see cref="GridView"/> is true.
         /// </summary>
         /// <returns>
         /// true if the 'SortAscending' indicator for a particular 
-        /// <see cref="SmartView"/> is true; otherwise, false.
+        /// <see cref="GridView"/> is true; otherwise, false.
         /// </returns>
         public bool SortAscending
         {
@@ -85,12 +83,12 @@ namespace Adf.Web
         #endregion
 
         /// <summary>
-        /// Sorts the records in the specified <see cref="SmartView"/>.
+        /// Sorts the records in the specified <see cref="GridView"/>.
         /// </summary>
         /// <param name="action">The 'Sorting' <see cref="GridAction"/> to perform.</param>
-        /// <param name="view">The <see cref="SmartView"/> to sort.</param>
+        /// <param name="view">The <see cref="GridView"/> to sort.</param>
         /// <param name="p">The parameters used for sorting.</param>
-        public void HandleService(GridAction action, SmartView view, params object[] p)
+        public void HandleService(GridAction action, GridView view, params object[] p)
         {
             if (view == null) return;
             if (!view.AllowSorting) return;

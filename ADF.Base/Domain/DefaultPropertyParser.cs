@@ -29,7 +29,7 @@ namespace Adf.Base.Domain
             // else try to cast the new value to the correct type
             object o = Convert.ChangeType(newvalue, pi.PropertyType, culture ?? CultureInfo.CurrentCulture);
 
-            pi.SetValue(instance, o, null);
+            if (pi.CanWrite) pi.SetValue(instance, o, null);
         }
 
         /// <summary>

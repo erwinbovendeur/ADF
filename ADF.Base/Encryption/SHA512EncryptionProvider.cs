@@ -18,9 +18,7 @@ namespace Adf.Base.Encryption
 
                 for (int i = 0; i < cryString.Length; i++)
                 {
-
-                    sha512Str += cryString[i].ToString("X");
-
+                    sha512Str += cryString[i].ToString("X2");
                 }
 
                 return sha512Str;

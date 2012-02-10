@@ -47,6 +47,10 @@ namespace Adf.Core.Data
         /// </summary>
         public static readonly DataSourceType SqlServer = new DataSourceType("SqlServer");
         /// <summary>
+        /// Represent a SQLite data _source.
+        /// </summary>
+        public static readonly DataSourceType SQLite = new DataSourceType("SQLite");
+        /// <summary>
         /// An Unknown data _source type in the <see cref="ObjectFactory"/>.
         /// </summary>
         public static readonly DataSourceType Unknown = new DataSourceType("Unknown");

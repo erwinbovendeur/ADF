@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using Adf.Base.Panels;
 using Adf.Core.Panels;
@@ -19,12 +18,12 @@ namespace Adf.Web.Panels
 
         public IEnumerable<object> Render(PanelItem panelItem)
         {
-            var validator = SmartValidator.Create(panelItem.GetId());
+            var validator = SmartValidator.Create(panelItem.GetPropertyName());
             var checkBox = new CheckBox { ID = panelItem.GetId(), Enabled = panelItem.Editable, CssClass = ItemStyle };
 
             panelItem.Target = checkBox;
 
-            return new List<Control> { checkBox, validator };
+            return new object[] { checkBox, validator };
         }
     }
 }

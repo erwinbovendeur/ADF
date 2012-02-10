@@ -12,7 +12,7 @@
     <AssemblyKeyContainerName>
     </AssemblyKeyContainerName>
     <AssemblyName>Adf.Web</AssemblyName>
-    <AssemblyOriginatorKeyFile>ADF.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\ADF.snk</AssemblyOriginatorKeyFile>
     <DefaultClientScript>JScript</DefaultClientScript>
     <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
     <DefaultTargetSchema>IE50</DefaultTargetSchema>
@@ -29,7 +29,7 @@
     <SignAssembly>true</SignAssembly>
     <OldToolsVersion>3.5</OldToolsVersion>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -58,8 +58,7 @@
     <DebugSymbols>true</DebugSymbols>
     <FileAlignment>4096</FileAlignment>
     <NoStdLib>false</NoStdLib>
-    <NoWarn>
-    </NoWarn>
+    <NoWarn>1591</NoWarn>
     <Optimize>false</Optimize>
     <RegisterForComInterop>false</RegisterForComInterop>
     <RemoveIntegerChecks>false</RemoveIntegerChecks>
@@ -85,8 +84,7 @@
     <DebugSymbols>true</DebugSymbols>
     <FileAlignment>4096</FileAlignment>
     <NoStdLib>false</NoStdLib>
-    <NoWarn>
-    </NoWarn>
+    <NoWarn>1591</NoWarn>
     <Optimize>true</Optimize>
     <RegisterForComInterop>false</RegisterForComInterop>
     <RemoveIntegerChecks>false</RemoveIntegerChecks>
@@ -110,11 +108,12 @@
     <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AjaxControlToolkit, Version=4.1.40412.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
+    <Reference Include="AjaxControlToolkit, Version=3.5.50927.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Bin\Reference\AjaxControlToolkit.dll</HintPath>
+      <HintPath>..\..\bin\References\AjaxControlToolkit.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>
@@ -158,20 +157,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Binding\BindOnPostbackAttribute.cs" />
+    <Compile Include="Binding\HiddenPersister.cs" />
+    <Compile Include="Binding\HiddenBinder.cs" />
     <Compile Include="Binding\LinkButtonBinder.cs" />
     <Compile Include="Binding\ImageBinder.cs" />
     <Compile Include="Binding\ListBoxBinder.cs" />
     <Compile Include="Binding\ListBoxPersister.cs" />
     <Compile Include="Binding\ObjectResolver.cs" />
-    <Compile Include="Binding\RadioButtonListBinder.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Binding\RepeaterBinder.cs" />
+    <Compile Include="Extensions\ViewStateExtensions.cs" />
     <Compile Include="Panels\BaseRenderer.cs" />
     <Compile Include="Panels\CalendarRenderer.cs" />
     <Compile Include="Panels\CheckBoxRenderer.cs" />
     <Compile Include="Panels\DropDownRenderer.cs" />
     <Compile Include="Panels\FileUploadRenderer.cs" />
     <Compile Include="Panels\ImageRenderer.cs" />
+    <Compile Include="Panels\PanelItemExtensions.cs" />
     <Compile Include="Panels\TextRenderer.cs" />
     <Compile Include="Panels\PanelRenderer.cs" />
     <Compile Include="Process\WebViewAuthorizationExtensions.cs" />
@@ -202,6 +203,9 @@
     <Compile Include="Binding\GridViewBinder.cs" />
     <Compile Include="Binding\HyperLinkBinder.cs" />
     <Compile Include="Binding\LabelBinder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Binding\RadioButtonListBinder.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Binding\RadioButtonListPersister.cs">
@@ -236,7 +240,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="UI\Buttons\SmartButton.cs" />
+    <Compile Include="UI\CompoundPanel.cs" />
     <Compile Include="UI\ControlExtensions.cs" />
+    <Compile Include="UI\HorizontalPanel.cs" />
     <Compile Include="UI\MessageImageButton.cs" />
     <Compile Include="UI\GenericComparer.cs" />
     <Compile Include="UI\PanelControl.cs" />
@@ -271,14 +277,17 @@
     <Compile Include="UI\SmartPanel\ValidatedPanelItem.cs" />
     <Compile Include="UI\SmartPanel\ValidatedRadioButtonListItem.cs" />
     <Compile Include="UI\SmartPanel\ValidatedTextBoxItem.cs" />
+    <Compile Include="UI\SmartRepeater.cs" />
     <Compile Include="UI\SmartView\AccountColumn.cs" />
     <Compile Include="UI\SmartView\BaseField.cs" />
     <Compile Include="UI\SmartView\BoolColumn.cs" />
     <Compile Include="UI\SmartView\BaseColumn.cs" />
     <Compile Include="UI\SmartView\BaseButton.cs" />
-    <Compile Include="UI\SmartView\TooltipColumn.cs" />
+    <Compile Include="UI\SmartView\CheckboxColumn.cs" />
     <Compile Include="UI\SmartView\EditButton.cs" />
+    <Compile Include="UI\SmartView\FormatEventArgs.cs" />
     <Compile Include="UI\SmartView\IconColumn.cs" />
+    <Compile Include="UI\SmartView\LinkColumn.cs" />
     <Compile Include="UI\SmartView\SelectButton.cs" />
     <Compile Include="UI\SmartView\DeleteButton.cs" />
     <Compile Include="UI\SmartView\SmartView.cs" />
@@ -292,6 +301,7 @@
     <Compile Include="UI\SmartView\TestButton.cs" />
     <Compile Include="UI\SmartView\TextButton.cs" />
     <Compile Include="UI\SmartView\TextColumn.cs" />
+    <Compile Include="UI\SmartView\TooltipColumn.cs" />
     <Compile Include="UI\SpecializedTextboxes\DateTextBox.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -317,6 +327,8 @@
     <Compile Include="UI\Styling\StyleHelper.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="UI\TwoColumnPanel.cs" />
+    <Compile Include="UI\VerticalPanel.cs" />
     <Compile Include="UI\WebStyler.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -331,7 +343,9 @@
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ADF.snk" />
+    <None Include="..\ADF.snk">
+      <Link>ADF.snk</Link>
+    </None>
     <None Include="Migrated rules for ADF.Web.ruleset" />
   </ItemGroup>
   <ItemGroup>
@@ -376,11 +390,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
-      <Link>CustomDictionary.xml</Link>
-    </CodeAnalysisDictionary>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UI\Helper\" />

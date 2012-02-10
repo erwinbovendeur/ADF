@@ -63,7 +63,7 @@ namespace Adf.Base.Domain
         }
         
         // internal so cant accidentally be called in user code, its a dirty way anyway
-        internal static bool Save(this IDomainObject domainObject)
+        public static bool Save(this IDomainObject domainObject)
         {
             return domainObject.InvokeFactoryMethod<bool>("Save", domainObject);
         }

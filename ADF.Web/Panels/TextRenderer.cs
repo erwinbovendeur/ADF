@@ -20,7 +20,7 @@ namespace Adf.Web.Panels
 
         public IEnumerable<object> Render(PanelItem panelItem)
         {
-            var validator = SmartValidator.Create(panelItem.GetId());
+            var validator = SmartValidator.Create(panelItem.GetPropertyName());
 
             if (panelItem.Type == PanelItemType.EditableText)
             {
@@ -29,16 +29,16 @@ namespace Adf.Web.Panels
 
                 panelItem.Target = text;
 
-                return new List<Control> { text, validator };
+                return new object[] { text, validator };
             }
             if (panelItem.Type == PanelItemType.Password)
             {
                 string css = ItemStyle + ((!panelItem.Editable) ? " ReadOnly" : "");
-                var text = new TextBox { ID = panelItem.GetId(), Wrap = true, TextMode =TextBoxMode.Password, ReadOnly = !panelItem.Editable, Width = new Unit(panelItem.Width, UnitType.Ex), CssClass = css };
+                var text = new TextBox { ID = panelItem.GetId(), Wrap = true, TextMode = TextBoxMode.Password, ReadOnly = !panelItem.Editable, Width = new Unit(panelItem.Width, UnitType.Ex), CssClass = css };
 
                 panelItem.Target = text;
-                
-                return new List<Control> { text, validator };
+
+                return new object[] { text, validator };
             }
             if (panelItem.Type == PanelItemType.MultiLineText)
             {
@@ -47,7 +47,7 @@ namespace Adf.Web.Panels
 
                 panelItem.Target = text;
 
-                return new List<Control> { text, validator };
+                return new object[] { text, validator };
             }
             if (panelItem.Type == PanelItemType.NonEditableText)
             {
@@ -56,7 +56,7 @@ namespace Adf.Web.Panels
 
                 panelItem.Target = text;
 
-                return new List<Control> { text };
+                return new object[] { text };
             }
             if (panelItem.Type == PanelItemType.Label)
             {
@@ -64,7 +64,7 @@ namespace Adf.Web.Panels
 
                 panelItem.Target = text;
 
-                return new List<Control> { text };
+                return new object[] { text };
             }
 
             return null;

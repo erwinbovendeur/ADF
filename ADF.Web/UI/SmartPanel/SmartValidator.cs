@@ -66,25 +66,31 @@ namespace Adf.Web.UI
             {
                 findInContainerControl = Parent.Parent;
             }
-            WebControl c = ControlHelper.Find(findInContainerControl, "panelLabelItem_" + name) as WebControl;
 
-            if (c != null)
-            {
-                IStyler s = IsValid ? DefaultStyler : ErrorStyler;
-
-                s.SetStyles(c);
-            }
-            
-            c = ControlHelper.Find(findInContainerControl, "panelControlItem_" + name) as WebControl;
-
-            if (c != null)
-            {
-                IStyler s = IsValid ? DefaultStyler : ErrorStyler;
-
-                s.SetStyles(c);
-            }
+            SetStyle(findInContainerControl, "panelLabelItem_" + name);
+            SetStyle(findInContainerControl, "panelControlItem_" + name);
+            SetParentStyle(findInContainerControl, "itemLabel_" + name);
         }
 
+        private void SetStyle(Control container, string controlName)
+        {
+            WebControl c = ControlHelper.Find<WebControl>(container, controlName);
+            if (c == null) return;
+            ApplyStyle(c);
+        }
+
+        private void SetParentStyle(Control container, string controlName)
+        {
+            WebControl c = ControlHelper.Find<WebControl>(container, controlName);
+            if (c == null || c.Parent == null) return;
+            ApplyStyle(c.Parent);
+        }
+
+        private void ApplyStyle(Control c)
+        {
+            IStyler s = IsValid ? DefaultStyler : ErrorStyler;
+            s.SetStyles(c);
+        }
     }
 }
 

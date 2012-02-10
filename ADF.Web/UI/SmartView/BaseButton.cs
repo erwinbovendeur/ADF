@@ -64,7 +64,7 @@ namespace Adf.Web.UI.SmartView
 
             if (cellType == DataControlCellType.DataCell && !tooltip.IsNullOrEmpty()) cell.ToolTip = tooltip;
 
-            var control = cell.Controls.Cast<Control>().OfType<IButtonControl>().OfType<Control>().FirstOrDefault();
+            var control = cell.Controls.OfType<IButtonControl>().Cast<Control>().FirstOrDefault();
 
             if (control != null)
             {

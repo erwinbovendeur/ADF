@@ -174,7 +174,7 @@ namespace Adf.Core.Query
         {
             if (_name.IsNullOrEmpty())
             {
-                Debug.WriteLine("trace: {0} ms", Convert.ToInt32((DateTime.Now - _started).TotalMilliseconds));
+                Debug.WriteLine(string.Format("trace: {0} ms", Convert.ToInt32((DateTime.Now - _started).TotalMilliseconds)));
             }
             else
             {

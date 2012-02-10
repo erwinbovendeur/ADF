@@ -1,0 +1,6 @@
+﻿/*
+ * CHECKBOX & RADIOBUTTON
+ */
+.ui-checkbox, .ui-radiobutton { display: block; width: 16px; height: 16px; float: left; position: relative; }
+.ui-checkbox .ui-icon, .ui-radiobutton .ui-icon { position: absolute; left: 0px; top: 0px; }
+.ui-checkbox .ui-icon-none, .ui-radiobutton .ui-icon-none { background-position: 100px 100px; }

@@ -33,7 +33,7 @@ namespace Adf.Test
         {
             var collection = func.Invoke(task);
 
-            Assert.IsTrue(collection.Contains(target), "Domain object [{0}] is not an element in the collection.", target.Title);
+            Assert.IsTrue(collection.Contains((D) target), "Domain object [{0}] is not an element in the collection.", target.Title);
 
             return task;
         }
@@ -80,7 +80,7 @@ namespace Adf.Test
             var list = func.Invoke(task);
 
             Assert.IsNotNull(list, "Domain collection [{0}] is null.", list);
-            Assert.IsTrue(list.Count() > 0, "Domain collection [{0}] is empty.", list);
+            Assert.IsTrue(list.Any(), "Domain collection [{0}] is empty.", list);
 
             return task;
         }

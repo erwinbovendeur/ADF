@@ -19,15 +19,15 @@ namespace Adf.Web.UI.Styling
 			SmartView.SmartView grid = c as SmartView.SmartView;
 			if (grid == null) return;
 
-			grid.CssClass = string.IsNullOrEmpty(grid.CssClass) ? "BusinessGrid" : grid.CssClass;
+            grid.CssClass = (grid.CssClass + " BusinessGrid").Trim();
 
-            grid.RowStyle.CssClass = string.IsNullOrEmpty(grid.RowStyle.CssClass) ? "BusinessGridItem" : grid.RowStyle.CssClass;
-            grid.EditRowStyle.CssClass = string.IsNullOrEmpty(grid.EditRowStyle.CssClass) ? "BusinessGridEditItem" : grid.EditRowStyle.CssClass;
-            grid.AlternatingRowStyle.CssClass = string.IsNullOrEmpty(grid.AlternatingRowStyle.CssClass) ? "BusinessGridAlternatingItem" : grid.AlternatingRowStyle.CssClass;
-            grid.SelectedRowStyle.CssClass = string.IsNullOrEmpty(grid.SelectedRowStyle.CssClass) ? "BusinessGridSelectedItem" : grid.SelectedRowStyle.CssClass;
-			grid.PagerStyle.CssClass = string.IsNullOrEmpty(grid.PagerStyle.CssClass) ? "BusinessGridPager" : grid.PagerStyle.CssClass;
-			grid.HeaderStyle.CssClass = string.IsNullOrEmpty(grid.HeaderStyle.CssClass) ? "BusinessGridHeader" : grid.HeaderStyle.CssClass;
-			grid.FooterStyle.CssClass = string.IsNullOrEmpty(grid.FooterStyle.CssClass) ? "BusinessGridFooter" : grid.FooterStyle.CssClass;
+            grid.RowStyle.CssClass = (grid.RowStyle.CssClass + " BusinessGridItem").Trim();
+            grid.EditRowStyle.CssClass = (grid.EditRowStyle.CssClass + " BusinessGridEditItem").Trim();
+            grid.AlternatingRowStyle.CssClass = (grid.AlternatingRowStyle.CssClass + " BusinessGridAlternatingItem").Trim();
+            grid.SelectedRowStyle.CssClass = (grid.SelectedRowStyle.CssClass + " BusinessGridSelectedItem").Trim();
+			grid.PagerStyle.CssClass = (grid.PagerStyle.CssClass + " BusinessGridPager").Trim();
+			grid.HeaderStyle.CssClass = (grid.HeaderStyle.CssClass + " BusinessGridHeader").Trim();
+			grid.FooterStyle.CssClass = (grid.FooterStyle.CssClass + " BusinessGridFooter").Trim();
 		}
 	}
 }

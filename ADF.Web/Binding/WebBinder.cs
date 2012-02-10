@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Web.UI;
+using Adf.Base.Domain;
 using Adf.Core.Binding;
 using Adf.Core.Objects;
 using Adf.Web.Helper;
@@ -126,22 +128,24 @@ namespace Adf.Web.Binding
             if (c == null || bindableObject == null)
                 return;
 
-            string domainobject = bindableObject.GetType().Name;
+            IEnumerable<string> domainObjectNames = GetObjectNames(bindableObject);
             PropertyInfo[] properties = bindableObject.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public);
             
             Dictionary<string, Control> dictionary = c.GetControls();
 
-            foreach (PropertyInfo pi in properties)
+            foreach (string domainObjectName in domainObjectNames)
             {
-                foreach (string key in controlBinders.Keys)
+                foreach (PropertyInfo pi in properties)
                 {
-                    string name = key + domainobject + pi.Name;
-
-                    if (!dictionary.ContainsKey(name)) continue;
-
-                    foreach (IControlBinder binder in controlBinders[key])
+                    foreach (string key in controlBinders.Keys)
                     {
-                        binder.Bind(dictionary[name], GetValue(bindableObject, pi), pi, p);
+                        string name = key + domainObjectName + pi.Name;
+                        if (!dictionary.ContainsKey(name)) continue;
+
+                        foreach (IControlBinder binder in controlBinders[key])
+                        {
+                            binder.Bind(dictionary[name], GetValue(bindableObject, pi), pi, p);
+                        }
                     }
                 }
             }
@@ -296,28 +300,43 @@ namespace Adf.Web.Binding
             if (c == null || bindableObject == null)
                 return;
 
-            string domainobject = bindableObject.GetType().Name;
+            IEnumerable<string> domainObjectNames = GetObjectNames(bindableObject);
             PropertyInfo[] properties = bindableObject.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public);
 
             Dictionary<string, Control> dictionary = c.GetControls();
 
-            foreach (PropertyInfo pi in properties)
+            foreach (string domainObjectName in domainObjectNames)
             {
-                foreach (string key in _persisters.Keys)
+                foreach (PropertyInfo pi in properties)
                 {
-                    string name = key + domainobject + pi.Name;
-
-                    if (!dictionary.ContainsKey(name)) continue;
-
-                    foreach (IControlPersister persister in _persisters[key])
+                    foreach (string key in _persisters.Keys)
                     {
-                        persister.Persist(bindableObject, pi, dictionary[name]);
+                        string name = key + domainObjectName + pi.Name;
+
+                        if (!dictionary.ContainsKey(name)) continue;
+
+                        foreach (IControlPersister persister in _persisters[key])
+                        {
+                            persister.Persist(bindableObject, pi, dictionary[name]);
+                        }
                     }
                 }
             }
         }
 
         #endregion Persist
+
+        private static IEnumerable<string> GetObjectNames(object bindableObject)
+        {
+            List<string> domainObjectNames = new List<string>();
+            Type domainObjectType = bindableObject.GetType();
+            do
+            {
+                domainObjectNames.Add(domainObjectType.Name);
+                domainObjectType = domainObjectType.BaseType;
+            } while (domainObjectType != null && domainObjectType != typeof (DomainObject) && domainObjectType != typeof (object));
+            return domainObjectNames;
+        }
 
         /// <summary>
         /// Gets a collection containing the keys in its list of control binders.

@@ -20,6 +20,8 @@ namespace Adf.Base.ViewModels
 
         public bool IsAltered { get { return DomainObject.IsAltered; } }
 
+        public bool IsNew { get { return DomainObject.IsNew; } }
+
         #region IComparable
 
         public int CompareTo(object obj)

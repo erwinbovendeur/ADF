@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Adf.Core.Objects;
 
 namespace Adf.Core.Types
@@ -20,9 +19,15 @@ namespace Adf.Core.Types
         {
             Type type = typeof(T);
 
+            if (value != null && type.IsInstanceOfType(value)) return (T) value;
+
             var converter = Converters.FirstOrDefault(c => c.CanConvert(type));
 
-            return (converter == null) ? default(T) : converter.To<T>(value);
+            if (converter == null && (value is string || typeof(T) == typeof(string)))
+            {
+                return (T)Convert.ChangeType(value, typeof(T));
+            }
+            return (converter == null) ? (T) value : converter.To<T>(value);
         }
 
         public static object ToPrimitive<T>(T value)
@@ -31,7 +36,7 @@ namespace Adf.Core.Types
 
             var converter = Converters.FirstOrDefault(c => c.CanConvert(type));
 
-            return (converter == null) ? default(T) : converter.ToPrimitive(value);
+            return (converter == null) ? value : converter.ToPrimitive(value);
         }
     }
 }

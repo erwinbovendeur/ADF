@@ -37,11 +37,22 @@ namespace Adf.Base.Panels
 
             return panel;
         }
+
+        public static P AsPassword<P>(this P panel) where P : AdfPanel
+        {
+            panel.LastItem().Type = PanelItemType.Password;
+            return panel;
+        }
+
+        public static P AsHidden<P>(this P panel) where P : AdfPanel
+        {
+            panel.LastItem().Type = PanelItemType.Hidden;
+            return panel;
+        }
         
         public static P AsLabel<P>(this P panel) where P : AdfPanel
         {
             panel.LastItem().Type = PanelItemType.Label;
-
             return panel;
         }
 

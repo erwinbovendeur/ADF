@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using Adf.Base.Domain;
 using Adf.Core.Data;
 using Adf.Core.Domain;
 using Adf.Core.Query;
@@ -49,7 +47,7 @@ namespace Adf.Base.Query
 
         private static string ParseSelect(IAdfQuery query)
         {
-            return query.Selects.Count == 0 ? query.Tables[0].EscapeFunction() + ".*" : string.Join(", ", query.Selects.Select(e => e.FullName()));
+            return query.Selects.Count == 0 ? query.Tables[0].EscapeFunction() + ".*" : string.Join(", ", query.Selects.Select(e => e.FullName()).ToArray());
         }
 
         #endregion Select
@@ -58,7 +56,7 @@ namespace Adf.Base.Query
 
         private static string ParseTables(IEnumerable<ITable> tables)
         {
-            return string.Join(", ", tables.Select(table => table.FullName()));
+            return string.Join(", ", tables.Select(table => table.FullName()).ToArray());
         }
 
         private static string ParseJoins(IEnumerable<IJoin> joins)
@@ -68,7 +66,7 @@ namespace Adf.Base.Query
                                                                     j.Type.Name,
                                                                     j.JoinColumn.Table.FullName(),
                                                                     j.JoinColumn.FullName(),
-                                                                    j.SourceColumn.FullName())));
+                                                                    j.SourceColumn.FullName())).ToArray());
         }
 
         #endregion From
@@ -91,7 +89,7 @@ namespace Adf.Base.Query
             
             var result = ParseWhere(conditionfirst, first);
 
-            result += string.Join(" ", wheres.Skip(1).Select(where => ParseWhere(condition, where)));
+            result += string.Join(" ", wheres.Skip(1).Select(where => ParseWhere(condition, where)).ToArray());
 
             return string.Format(CultureInfo.InvariantCulture, _where, result);
         }
@@ -107,7 +105,7 @@ namespace Adf.Base.Query
             else if (where.Parameter.Type == ParameterType.ValueList)
             {
                 var names = String.Join(",",
-                                        ((IEnumerable) where.Parameter.Value).Cast<object>().Select((v, i) => string.Format("@{0}_v{1}", where.Parameter.Name, i)));
+                                        ((IEnumerable) where.Parameter.Value).Cast<object>().Select((v, i) => string.Format("@{0}_v{1}", where.Parameter.Name, i)).ToArray());
 
                 // when list is empty this clause should not return results
                 if (string.IsNullOrEmpty(names)) return string.Format(CultureInfo.InvariantCulture, format, 1, "=", 0, where.Predicate, "", "");    
@@ -193,14 +191,14 @@ namespace Adf.Base.Query
         {
             if (orderBys.Count == 0) return string.Empty;
 
-            return "ORDER BY " + String.Join(", ", orderBys.Select(o => string.Format(CultureInfo.InvariantCulture, "{0} {1}", o.Column.FullName(), o.SortOrder == SortOrder.Descending ? "DESC" : "ASC")));
+            return "ORDER BY " + String.Join(", ", orderBys.Select(o => string.Format(CultureInfo.InvariantCulture, "{0} {1}", o.Column.FullName(), o.SortOrder == SortOrder.Descending ? "DESC" : "ASC")).ToArray());
         }
 
         private static string ParseGroupBy(ICollection<IExpression> groupBys)
         {
             if (groupBys.Count == 0) return string.Empty;
 
-            return "GROUP BY " + string.Join(", ", groupBys.Select(e => e.FullName()));
+            return "GROUP BY " + string.Join(", ", groupBys.Select(e => e.FullName()).ToArray());
         }
 
         public string Parse(IAdfQuery query)
@@ -220,11 +218,11 @@ namespace Adf.Base.Query
 
             var wheres = query.Wheres.Where(w => w.Parameter.Type == ParameterType.QueryParameter);
 
-            var columns = string.Join(", ", wheres.Select(w => w.Column.EncloseInBrackets()));
+            var columns = string.Join(", ", wheres.Select(w => w.Column.EncloseInBrackets()).ToArray());
 
             ParseWheres(query.Wheres);      // give the parameters a name
 
-            var parameters = string.Join(", ", wheres.Select(w => w.Parameter.Value == null ? "NULL" : "@" + w.Parameter.Name));
+            var parameters = string.Join(", ", wheres.Select(w => w.Parameter.Value == null ? "NULL" : "@" + w.Parameter.Name).ToArray());
 
             var result = string.Format("INSERT INTO {0} ({1}) VALUES({2})", from, columns, parameters);
 
@@ -244,7 +242,7 @@ namespace Adf.Base.Query
                                        .Where(w => w.Parameter.Type == ParameterType.QueryParameter)
                                        .Select(
                                            w => string.Format("{0} = {1}", w.Column.EncloseInBrackets(),
-                                                         w.Parameter.Value == null ? "NULL" : "@" + w.Parameter.Name)));
+                                                         w.Parameter.Value == null ? "NULL" : "@" + w.Parameter.Name)).ToArray());
 
             var result = string.Format("UPDATE {0} SET {1} {2}", from, sets, where);
 
@@ -322,7 +320,7 @@ namespace Adf.Base.Query
         public static string FullName(this ITable table)
         {
             // don't put [] around if it's a function
-            return table.Name.IndexOf("(") > 0 ? table.Name : string.Format(CultureInfo.InvariantCulture, "[{0}]", table.Name);
+            return table.Name.IndexOf("(", StringComparison.Ordinal) > 0 ? table.Name : string.Format(CultureInfo.InvariantCulture, "[{0}]", table.Name);
         }
 
         public static string EscapeFunction(this ITable table)

@@ -18,6 +18,7 @@ namespace Adf.Core.Panels
         public string Text { get; set; }
         public MemberInfo Member { get; set; }
         public object Target { get; set; }
+        public object Control { get; set; }
         public bool RequiresValidation { get; set; }
         public bool AttachToPrevious { get; set; }
         public List<PanelItem> AttachedItems { get { return attacheditems; } }

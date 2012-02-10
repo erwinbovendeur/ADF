@@ -108,5 +108,20 @@ namespace Adf.Core.Extensions
         {
             return source.IndexOf(toCheck, comp) >= 0;
         }
+
+        public static bool IsNullOrWhiteSpace(this string source)
+        {
+            return source == null || source.Trim().Length == 0;
+        }
+
+        public static string Append(this string source, string append)
+        {
+            return string.Concat(source, append);
+        }
+
+        public static string AppendFormat(this string source, string append, params object[] args)
+        {
+            return string.Concat(source, string.Format(append, args));
+        }
     }
 }

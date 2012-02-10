@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using Adf.Base.Panels;
 using Adf.Core.Panels;
@@ -20,7 +19,7 @@ namespace Adf.Web.Panels
 
         public IEnumerable<object> Render(PanelItem panelItem)
         {
-            var validator = SmartValidator.Create(panelItem.GetId());
+            var validator = SmartValidator.Create(panelItem.GetPropertyName());
 
             var box = new SmartDateTextBox { ID = panelItem.GetId(), TextMode = TextBoxMode.SingleLine, Wrap = true, Enabled = panelItem.Editable, Width = new Unit(panelItem.Width, UnitType.Ex), FormatDisplay = DateFormat, CssClass = ItemStyle };
             var calendar = new CalendarExtender { TargetControlID = box.UniqueID, Format = DateFormat, EnabledOnClient = panelItem.Editable };
@@ -28,7 +27,7 @@ namespace Adf.Web.Panels
 
             panelItem.Target = calendar;
 
-            return new List<Control> { box, validator, calendar, description };
+            return new object[] { box, validator, calendar, description };
         }
     }
 }

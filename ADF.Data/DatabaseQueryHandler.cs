@@ -117,7 +117,7 @@ namespace Adf.Data
 
             if (IsResultEmpty(result)) return NullInternalState.NullList;
             
-            return RowState.Fill(result.Tables[0]);
+            return RowState.Fill(result.Tables[0]).Cast<IInternalState>();
         }
 
 

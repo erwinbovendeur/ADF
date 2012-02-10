@@ -22,5 +22,6 @@
         public static readonly PanelItemType InfoIcon = new PanelItemType("icn", "InfoIcon");
         public static readonly PanelItemType FileUpload = new PanelItemType("upl", "FileUpload");
         public static readonly PanelItemType RadioButtonList = new PanelItemType("rbl", "RadioButtonList");
+        public static readonly PanelItemType Hidden = new PanelItemType("hid", "Hidden");
     }
 }

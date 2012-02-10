@@ -1,17 +1,14 @@
 using System;
+using System.Reflection;
 using System.Web;
 using System.Web.UI;
+using Adf.Base.Tasks;
 using Adf.Core.Tasks;
 using Adf.Core.Views;
 
 namespace Adf.Web.Process
 {
-    /// <summary>
-    /// Abstract class for the classes of the web pages.
-    /// Used to redefine the events like 'OnPreInit', 'OnInit', 'Page_Load' etc of the 
-    /// <see cref="System.Web.UI.Page"/> class.
-    /// </summary>
-    public abstract class WebView<T> : Page, IView where T : ITask
+    public abstract class WebView : Page
     {
         /// <summary>
         /// Gets or sets the Id of the task corresponding to this web page.
@@ -26,22 +23,7 @@ namespace Adf.Web.Process
                 if (ViewState["TaskId"] == null) return Guid.Empty;
                 return (Guid)ViewState["TaskId"];
             }
-            
             set { ViewState["TaskId"] = value; }
-        }
-
-        /// <summary>
-        /// Gets the task corresponding to this web page.
-        /// </summary>
-        /// <returns>
-        /// The task corresponding to this web page.
-        /// </returns>
-        public T MyTask
-        {
-            get
-            {
-                return (T)Task;
-            }
         }
 
         /// <summary>
@@ -52,9 +34,19 @@ namespace Adf.Web.Process
         /// </returns>
         public ITask Task
         {
-            get { return TaskManager.FindTaskById(Id); }
+            get
+            {
+                try
+                {
+                    return TaskManager.FindTaskById(Id);
+                }
+                catch (TaskNotFoundException)
+                {
+                    TaskManager.Home();
+                    return null;
+                }
+            }
         }
-
         /// <summary>
         /// Sets the cache properties and binds a business object to a web page.
         /// </summary>
@@ -114,6 +106,50 @@ namespace Adf.Web.Process
         private void InitializeComponent()
         {
             Load += Page_Load;
+        }
+
+        protected bool UseTaskManager
+        {
+            get
+            {
+                string val = Request.QueryString["task"];
+                return (string.IsNullOrEmpty(val) || !val.Equals("0"));
+            }
+        }
+    }
+
+    /// <summary>
+    /// Abstract class for the classes of the web pages.
+    /// Used to redefine the events like 'OnPreInit', 'OnInit', 'Page_Load' etc of the 
+    /// <see cref="System.Web.UI.Page"/> class.
+    /// </summary>
+    public abstract class WebView<T> : WebView, IView where T : class, ITask
+    {
+        private T myTask;
+
+        /// <summary>
+        /// Gets the task corresponding to this web page.
+        /// </summary>
+        /// <returns>
+        /// The task corresponding to this web page.
+        /// </returns>
+        public T MyTask
+        {
+            get
+            {
+                if (myTask == null)
+                {
+                    if (!UseTaskManager)
+                    {
+                        // Skip taskmanager, create instance of T without adding it to the taskmanager
+                        ConstructorInfo ci = typeof(T).GetConstructor(new[] { typeof(ApplicationTask), typeof(ITask) });
+                        myTask = (T) ci.Invoke(new object[] {null, null});
+                    }
+                    else
+                        myTask = (T) Task;
+                }
+                return myTask;
+            }
         }
     }
 }

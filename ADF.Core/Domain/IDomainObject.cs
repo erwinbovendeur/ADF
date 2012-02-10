@@ -31,5 +31,11 @@ namespace Adf.Core.Domain
         /// </summary>
         /// <returns>true if the DomainObject is altered; otherwise, false.</returns>
         bool IsAltered { get; }
-	}
+    
+        /// <summary>
+        /// Gets the value indicating whether the DomainObject is new.
+        /// </summary>
+        /// <returns>true if the DomainObject is new; otherwise, false.</returns>
+        bool IsNew { get; }
+    }
 }

@@ -92,7 +92,7 @@ namespace Adf.Base.Messaging
                                         ? (decimal) oldvalue
                                         : 0;
 
-                decimal amount = !string.IsNullOrWhiteSpace(fields[fieldDefinition.StartPosition])
+                decimal amount = !fields[fieldDefinition.StartPosition].IsNullOrWhiteSpace()
                             ? Decimal.Parse(fields[fieldDefinition.StartPosition],
                                 fieldDefinition.Format.IsNullOrEmpty() ? CultureInfo.InvariantCulture : new CultureInfo(fieldDefinition.Format))
                             : 0;
@@ -137,7 +137,7 @@ namespace Adf.Base.Messaging
             if (internalStates != null)
                 lines.AddRange(internalStates.Select(state => CreateLine(definition.Records[0], state)));
 
-            return Encoding.UTF8.GetBytes(string.Join("\r\n", lines));
+            return Encoding.UTF8.GetBytes(string.Join("\r\n", lines.ToArray()));
         }
 
         private static string CreateLine(RecordDefinition recordDefinition, IInternalState state)
@@ -157,7 +157,7 @@ namespace Adf.Base.Messaging
                 currentPosition++;
             }
 
-            return string.Join(recordDefinition.FieldSeparator, columns);
+            return string.Join(recordDefinition.FieldSeparator, columns.ToArray());
         }
 
         private static string GetValueForField(FieldDefinition fieldDefinition, IInternalState state)
@@ -236,7 +236,7 @@ namespace Adf.Base.Messaging
                 currentPosition++;
             }
 
-            return string.Join(recordDefinition.FieldSeparator, header);
+            return string.Join(recordDefinition.FieldSeparator, header.ToArray());
         }
 
         public IInternalState GetEmpty(string messagename, string tablename)

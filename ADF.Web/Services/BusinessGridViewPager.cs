@@ -1,13 +1,11 @@
 using System.Web.UI.WebControls;
 using Adf.Core.State;
-using Adf.Web.UI;
-using Adf.Web.UI.SmartView;
 
 namespace Adf.Web
 {
     /// <summary>
-    /// Represents the pager related service of an <see cref="SmartView"/>.
-    /// Provides methods to set the pager related properties of an <see cref="SmartView"/>.
+    /// Represents the pager related service of an <see cref="GridView"/>.
+    /// Provides methods to set the pager related properties of an <see cref="GridView"/>.
     /// </summary>
     class BusinessGridViewPager : IGridService
     {
@@ -29,16 +27,16 @@ namespace Adf.Web
         }
 
         /// <summary>
-        /// Sets the pager related properties of the specified <see cref="SmartView"/>.
+        /// Sets the pager related properties of the specified <see cref="GridView"/>.
         /// </summary>
         /// <remarks>
         /// The pager related properties like PageSize, PagerSettings.Mode, 
         /// PagerSettings.PageButtonCount and PagerSettings.Position are set.
         /// </remarks>
-        /// <param name="view">The <see cref="SmartView"/>, the pager 
+        /// <param name="view">The <see cref="GridView"/>, the pager 
         /// related properties of which are to set.</param>
         /// <param name="p">The parameters used to set the properties. Currently not being used.</param>
-        public void InitService(SmartView view, params object[] p)
+        public void InitService(GridView view, params object[] p)
         {
             view.PageSize = (view.PageSize == 10) ? DefaultPageSize : view.PageSize;
 //            view.PagerSettings.Visible = view.AllowPaging;
@@ -54,13 +52,13 @@ namespace Adf.Web
         }
 
         /// <summary>
-        /// Sets the new page as the current page of the specified <see cref="SmartView"/>.
+        /// Sets the new page as the current page of the specified <see cref="GridView"/>.
         /// </summary>
         /// <param name="action">The 'Paging' <see cref="GridAction"/> to perform.</param>
-        /// <param name="view">The <see cref="SmartView"/>, the current page of 
+        /// <param name="view">The <see cref="GridView"/>, the current page of 
         /// which is to set.</param>
         /// <param name="p">The parameters used to set the current page.</param>
-        public void HandleService(GridAction action, SmartView view, params object[] p)
+        public void HandleService(GridAction action, GridView view, params object[] p)
         {
             if (view == null) return;
             if (!view.AllowPaging) return;

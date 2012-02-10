@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
+using Adf.Core.Extensions;
 using Adf.Core.Objects;
 using Adf.Core.State;
 
@@ -148,6 +150,18 @@ namespace Adf.Core.Validation
         public static void AddError(PropertyInfo pi, string message, params object[] args)
         {
             AddValidationResult(ValidationResult.CreateError(pi, message, args));
+        }
+
+        /// <summary>
+        /// Adds a <see cref="ValidationResult"/> with the specified property, error message and arguments to the ValidationContext.
+        /// </summary>
+        /// <typeparam name="T">The type of which a property is used.</typeparam>
+        /// <param name="property">The property of the <see cref="ValidationResult"/>.</param>
+        /// <param name="message">The error message of the <see cref="ValidationResult"/>.</param>
+        /// <param name="args">The arguments of the <see cref="ValidationResult"/>.</param>
+        public static void AddError<T>(Expression<Func<T, object>> property, string message, params object[] args)
+        {
+            AddError(property.GetExpressionMember() as PropertyInfo, message, args);
         }
 
         #endregion

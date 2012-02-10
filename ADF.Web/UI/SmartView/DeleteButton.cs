@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Adf.Web.UI.SmartView
+﻿namespace Adf.Web.UI.SmartView
 {
     public class DeleteButton : IconButton
     {

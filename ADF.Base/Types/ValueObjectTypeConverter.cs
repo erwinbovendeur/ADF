@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using Adf.Core.Domain;
 using Adf.Core.Types;
 
@@ -25,7 +24,7 @@ namespace Adf.Base.Types
         /// <returns>Object converted to rich type.</returns>
         public T To<T>(object value)
         {
-            return (T)Activator.CreateInstance(typeof(T), value);
+            return (value is T) ? (T) value : (T)Activator.CreateInstance(typeof(T), value);
         }
 
         /// <summary>

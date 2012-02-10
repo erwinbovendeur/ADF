@@ -98,5 +98,9 @@ namespace Adf.Web.UI.SmartView
         {
             return new BoundField();
         }
+
+        public override void ValidateSupportsCallback()
+        {
+        }
     }
 }

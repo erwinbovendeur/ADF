@@ -10,8 +10,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Adf.Base</RootNamespace>
     <AssemblyName>Adf.Base</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,31 +22,32 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>
-    </DocumentationFile>
+    <NoWarn>1591</NoWarn>
+    <DocumentationFile>..\..\Bin\Output\Adf.Base.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\Bin\Output\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisRuleSet>..\ADF.Core\Migrated rules for ADF.Core.ruleset</CodeAnalysisRuleSet>
+    <NoWarn>1591</NoWarn>
+    <DocumentationFile>..\..\Bin\Output\Adf.Base.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>ADF.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\ADF.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -58,6 +60,7 @@
     <Compile Include="Data\DictionaryState.cs" />
     <Compile Include="Data\InvalidColumnException.cs" />
     <Compile Include="Data\QueryExtensions.cs" />
+    <Compile Include="Data\SimpleInternalState.cs" />
     <Compile Include="Data\SqlProvider.cs" />
     <Compile Include="Domain\CompositionAttribute.cs" />
     <Compile Include="Domain\DefaultPropertyParser.cs" />
@@ -74,6 +77,7 @@
     <Compile Include="Domain\NullablePropertyParser.cs" />
     <Compile Include="Domain\ObjectScope.cs" />
     <Compile Include="Domain\ValueObjectPropertyParser.cs" />
+    <Compile Include="Encryption\SHA1EncryptionProvider.cs" />
     <Compile Include="Encryption\EncryptionExtensions.cs" />
     <Compile Include="Encryption\MD5EncryptionProvider.cs" />
     <Compile Include="Encryption\SHA512EncryptionProvider.cs" />
@@ -129,13 +133,14 @@
     <Compile Include="Tasks\TaskViewExtensions.cs" />
     <Compile Include="Tasks\TaskProvider.cs" />
     <Compile Include="Types\EnumTypeConverter.cs" />
-    <Compile Include="Types\ValueObjectTypeConverter.cs" />
     <Compile Include="Types\NullableTypeConverter.cs" />
     <Compile Include="Types\TypeExtensions.cs" />
+    <Compile Include="Types\ValueObjectTypeConverter.cs" />
     <Compile Include="Validation\AttributeValidationPolicy.cs" />
     <Compile Include="Validation\BusinessRuleValidationContext.cs" />
     <Compile Include="Validation\BusinessRuleValidationPolicy.cs" />
     <Compile Include="Validation\ChildValidationPolicy.cs" />
+    <Compile Include="Validation\EmptySelectItemAttribute.cs" />
     <Compile Include="Validation\InRangeAttribute.cs" />
     <Compile Include="Validation\InSqlDateTimeRangeAttribute.cs" />
     <Compile Include="Validation\InSqlSmallDateTimeRangeAttribute.cs" />
@@ -156,7 +161,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <None Include="ADF.snk" />
+    <None Include="..\ADF.snk">
+      <Link>ADF.snk</Link>
+    </None>
     <None Include="Messaging\MessageDefinitionSchema.xsd">
       <SubType>Designer</SubType>
     </None>

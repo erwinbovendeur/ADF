@@ -22,7 +22,7 @@ namespace Adf.Core.Extensions
         /// </exception>
         public static bool IsExcluded(this MemberInfo mi)
         {
-            return (mi != null) ? (mi.GetCustomAttributes(typeof(ExcludeAttribute), false).Length > 0) : false;
+            return (mi != null) && (mi.GetCustomAttributes(typeof(ExcludeAttribute), false).Length > 0);
         }
 
         public static MemberInfo GetExpressionMember<T>(this Expression<Func<T, object>> propertyExpression)
@@ -30,7 +30,7 @@ namespace Adf.Core.Extensions
             MemberExpression body = null;
             if (propertyExpression.Body is UnaryExpression)
             {
-                var unary = propertyExpression.Body as UnaryExpression;
+                var unary = (UnaryExpression) propertyExpression.Body;
                 if (unary.Operand is MemberExpression)
                     body = unary.Operand as MemberExpression;
             }
@@ -64,7 +64,7 @@ namespace Adf.Core.Extensions
                 memberExpression = memberExpression.Expression as MemberExpression;
             }
 
-            return string.Join(".", path);
+            return string.Join(".", path.ToArray());
         }
     }
 }

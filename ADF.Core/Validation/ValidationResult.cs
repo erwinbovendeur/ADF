@@ -1,7 +1,9 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Linq.Expressions;
 using System.Reflection;
+using Adf.Core.Extensions;
 using Adf.Core.Resources;
 using Adf.Core.State;
 
@@ -123,7 +125,7 @@ namespace Adf.Core.Validation
         /// <see cref="ValidationResult"/> is 'Informational'; otherwise, false.</returns>
         public bool IsInformational
         {
-            get { return Severity == ValidationResultSeverity.Informational; }
+            get { return _severity == ValidationResultSeverity.Informational; }
         }
 
         /// <summary>
@@ -147,7 +149,7 @@ namespace Adf.Core.Validation
         {
             get { return _property; }
         }
-
+      
         /// <summary>
         /// Creates a new <see cref="ValidationResult"/> with the 
         /// <see cref="ValidationResultSeverity"/> as 'Error' using the specified message and arguments.
@@ -205,7 +207,12 @@ namespace Adf.Core.Validation
         {
             return new ValidationResult(ValidationResultSeverity.Error, message, property, args);
         }
-        
+
+        public static ValidationResult CreateError<T>(Expression<Func<T, object>> property, string message, params object[] args)
+        {
+            return CreateError(property.GetExpressionMember() as PropertyInfo, message, args);
+        }
+
         /// <summary>
         /// Creates a new <see cref="ValidationResult"/> with the 
         /// <see cref="ValidationResultSeverity"/> as 'Error' using the specified property, message 
@@ -220,6 +227,11 @@ namespace Adf.Core.Validation
         public static ValidationResult CreateInfo(PropertyInfo property, string message, params object[] args)
         {
             return new ValidationResult(ValidationResultSeverity.Informational, message, property, args);
+        }
+
+        public static ValidationResult CreateInfo<T>(Expression<Func<T, object>> property, string message, params object[] args)
+        {
+            return CreateInfo(property.GetExpressionMember() as PropertyInfo, message, args);
         }
         
         /// <summary>
@@ -236,6 +248,11 @@ namespace Adf.Core.Validation
         public static ValidationResult CreateWarning(PropertyInfo property, string message, params object[] args)
         {
             return new ValidationResult(ValidationResultSeverity.Warning, message, property, args);
+        }
+    
+        public static ValidationResult CreateWarning<T>(Expression<Func<T, object>> property, string message, params object[] args)
+        {
+            return CreateWarning(property.GetExpressionMember() as PropertyInfo, message, args);
         }
     }
 }

@@ -1,0 +1,96 @@
+﻿/* Float Clearing
+ ---------------------------------------------------------------------*/
+
+.adfj-breadcrumb:after
+{
+	clear: both;
+	content: ".";
+	display: block;
+	height: 0;
+	visibility: hidden;
+}
+
+/* float clearing for IE6 */
+* html .adfj-breadcrumb
+{
+	height: 1%;
+	overflow: visible;
+}
+
+/* float clearing for IE7 */
+* + html .adfj-breadcrumb
+{
+	min-height: 1%;
+}
+
+/* adfj-breadcrumb Styles
+ ---------------------------------------------------------------------*/
+
+.adfj-breadcrumb
+{
+	display: block;
+	overflow: hidden;
+	border:solid 1px #dedede;
+}
+.adfj-breadcrumb ul
+{
+	margin: 0;
+	padding: 0;
+	display: block;
+}
+.adfj-breadcrumb ul li
+{
+	display: block;
+	float: left;
+	position: relative;
+	overflow: hidden;
+	margin: 0px 6px 0px 0;
+	padding: 0px 10px 0px 0;
+	font-size: .9167em;
+	background: url(<%=WebResource("Adf.Web.jQuery.jbreadcrumb.Chevron.gif")%>) no-repeat 100% 0;
+}
+.adfj-breadcrumb ul li div.chevronOverlay
+{
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: 2;
+}
+.adfj-breadcrumb ul li span
+{
+	display: block;
+	overflow: hidden;
+}
+.adfj-breadcrumb ul li
+{
+	display: block;
+	position: relative;
+	overflow: hidden;
+	float: left;
+}
+.adfj-breadcrumb ul li.first
+{
+	height: 16px !important;
+	text-indent:-1000em;
+	width:16px;
+	padding: 0;
+	overflow: hidden;
+	background:url(<%=WebResource("Adf.Web.jQuery.jbreadcrumb.IconHome.gif")%>) no-repeat 0 0;
+}
+.adfj-breadcrumb ul li.first a:hover
+{
+	background-position: 0 -16px;
+}
+.adfj-breadcrumb ul li.last
+{
+	background: none;
+	margin-right: 0;
+	padding-right: 0;
+}
+.chevronOverlay
+{
+	display: none;
+	background: url(<%=WebResource("Adf.Web.jQuery.jbreadcrumb.ChevronOverlay.png")%>) no-repeat 100% 0;
+	width: 13px;
+	height: 20px;
+}

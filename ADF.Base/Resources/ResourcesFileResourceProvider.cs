@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Configuration;
 using System.Globalization;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using Adf.Core.Resources;
 using Adf.Core.State;
+using ResourceManager = System.Resources.ResourceManager;
 
 namespace Adf.Base.Resources
 {
@@ -12,20 +16,53 @@ namespace Adf.Base.Resources
     /// </summary>
     public class ResourcesFileResourceProvider : IResourceProvider
     {
+        private static Assembly resourceAssembly;
+
+        private static Assembly ResourceAssembly
+        {
+            get
+            {
+                if (resourceAssembly == null)
+                {
+                    string resAssemblyName = (string)StateManager.Settings["ResourceAssembly"];
+
+                    // Try to find the assembly in the current appdomain
+                    resourceAssembly =
+                        AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(
+                            o => o.GetName().Name == Path.GetFileNameWithoutExtension(resAssemblyName));
+
+                    resourceAssembly = resourceAssembly ?? Assembly.Load(resAssemblyName);
+                    if (resourceAssembly == null)
+                        throw new ConfigurationErrorsException(
+                            "ResourceAssembly specified in settings can not be found.");
+                }
+                return resourceAssembly;
+            }
+        }
+
         /// <summary>
         /// Gets the file based <see cref="System.Resources.ResourceManager"/>.
         /// </summary>
         /// <returns>
         /// The file based <see cref="System.Resources.ResourceManager"/>.
         /// </returns>
-        private static System.Resources.ResourceManager Resource
+        private static ResourceManager Resource
         {
             get
             {
-                return System.Resources.ResourceManager.CreateFileBasedResourceManager(
-                    StateManager.Settings["ResourceFile"] as string,
-                    Path.Combine(AppDomain.CurrentDomain.BaseDirectory, StateManager.Settings["ResourceDir"] as string),
-                    null);
+                if (StateManager.Settings.Has("ResourceDir"))
+                {
+                    return ResourceManager.CreateFileBasedResourceManager(
+                        (string) StateManager.Settings["ResourceFile"],
+                        Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+                                        (string) StateManager.Settings["ResourceDir"]),
+                        null);
+                }
+                if (StateManager.Settings.Has("ResourceAssembly"))
+                {
+                    return new ResourceManager((string)StateManager.Settings["ResourceFile"], ResourceAssembly);
+                }
+                return null;
             }
         }
 
@@ -39,7 +76,7 @@ namespace Adf.Base.Resources
         /// </returns>
         public string GetString(string key)
         {
-            System.Resources.ResourceManager resource = Resource;
+            ResourceManager resource = Resource;
 
             string value = resource.GetString(key);
 
@@ -58,7 +95,7 @@ namespace Adf.Base.Resources
         /// </returns>
         public string GetString(string key, CultureInfo culture)
         {
-            System.Resources.ResourceManager resource = Resource;
+            ResourceManager resource = Resource;
 
             string value = resource.GetString(key, culture);
 

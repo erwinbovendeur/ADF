@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Linq;
+using Adf.Base.Types;
 using Adf.Core.Data;
 using Adf.Core.Domain;
 using Adf.Core.Identity;
@@ -192,7 +193,7 @@ namespace Adf.Data.InternalState
         /// <param name="value">The <see cref="System.Object"/> value will set into the column.</param>
         protected virtual void SetCell(string column, object value)
         {
-            row[column] = value;
+            row[column] = value ?? DBNull.Value;
 
             status = status.DetermineStatus(InternalStatus.Changed);
         }
@@ -232,7 +233,25 @@ namespace Adf.Data.InternalState
         {
             object value = GetCell(property);
 
-            return (value is DBNull) ? default(T) : (T)value;
+            if (value == null || value is DBNull) return default(T);
+
+            if (typeof(T).IsNullable()) return (T)new NullableConverter(typeof(T)).ConvertFrom(value);
+            if (typeof(T).IsValueObject()) return (T)Activator.CreateInstance(typeof(T), value);
+            if (value.GetType().IsValueObject()) value = ((IValueObject)value).Value;
+
+            if (value is string || typeof(T) == typeof(string))
+            {
+                return (T)Convert.ChangeType(value, typeof(T));
+            }
+
+            try
+            {
+                return (T)value;
+            }
+            catch (InvalidCastException)
+            {
+                return default(T);
+            }
         }
 
         /// <summary>
@@ -246,7 +265,7 @@ namespace Adf.Data.InternalState
         {
             if (!IsEqual(GetCell(property), value))
             {
-                SetCell(property, value == null ? (object) DBNull.Value : value);
+                SetCell(property, (typeof(T).IsValueObject()) ? ((IValueObject)value).IsEmpty ? DBNull.Value : ((IValueObject)value).Value : value);
             }
         }
 

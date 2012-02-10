@@ -84,7 +84,7 @@ namespace Adf.Core.Identity
         {
             // Make sure the cast that follows won't fail
             if (obj == null || !(obj is ID))
-                return false;
+                return Value.Equals(obj);
 
             return (this == (ID) obj);
         }

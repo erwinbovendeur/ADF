@@ -21,7 +21,7 @@ namespace Adf.Web.Panels
 
             panelItem.Target = upload;
 
-            return new List<Control> { upload };
+            return new List<Control> { upload }.Cast<object>();
         }
     }
 }

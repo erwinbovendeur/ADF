@@ -1,5 +1,7 @@
 using System;
+using System.Linq.Expressions;
 using System.Web.UI.WebControls;
+using Adf.Core.Extensions;
 using Adf.Core.Resources;
 
 namespace Adf.Web.UI
@@ -54,6 +56,16 @@ namespace Adf.Web.UI
             dropDownList.PreRender += delegate { dropDownList.CssClass = (dropDownList.Enabled) ? ("DropDownList") : ("DropDownList ReadOnly"); };
 
             return new DropDownListItem(l, dropDownList);
+        }
+
+        public static DropDownListItem Create<T>(Expression<Func<T, object>> property, int width, bool enabled = true, bool mandatory = true)
+        {
+            return Create(property.GetExpressionMember().Name, property, width, enabled, mandatory);
+        }
+
+        public static DropDownListItem Create<T>(string label, Expression<Func<T, object>> property, int width, bool enabled = true, bool mandatory = true)
+        {
+            return Create(label, property.GetControlName(), width, enabled);
         }
 
         #region Overrides of BasePanelItem

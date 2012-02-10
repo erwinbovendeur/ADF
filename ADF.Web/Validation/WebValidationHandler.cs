@@ -23,10 +23,10 @@ namespace Adf.Web
 
             if (page == null) return;
 
-            var control = ControlHelper.Find(page, "ExceptionControl") as UserControl;
+            var control = ControlHelper.Find<UserControl>(page, "ExceptionControl");
             if (control != null) control.Visible = true;
 
-            Label l = ControlHelper.Find(page, "lblException") as Label;
+            Label l = ControlHelper.Find<Label>(page, "lblException");
             if (l != null) l.Text = validationResults.ToArray().ConvertToString("<br>");
         }
     }

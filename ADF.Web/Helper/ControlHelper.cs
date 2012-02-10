@@ -44,6 +44,11 @@ namespace Adf.Web.Helper
             return null;
         }
 
+        public static T Find<T>(Control control, string id) where T : class
+        {
+            return Find(control, id) as T;
+        }
+
         public static Dictionary<string, Control> GetControls(this Control root, Dictionary<string, Control> dictionary = null)
         {
             if (dictionary == null) dictionary = new Dictionary<string, Control>();
@@ -105,6 +110,20 @@ namespace Adf.Web.Helper
             var list = new List<Control>();
 
             return List(list, container, controlType);
+        }
+
+        /// <summary>
+        /// Searches the specified container <see cref="System.Web.UI.Control"/> for Controls 
+        /// of the specified <see cref="System.Type"/> or any of its subtypes.
+        /// </summary>
+        /// <typeparam name="T">The <see cref="System.Type"/> to check against.</typeparam>
+        /// <param name="container">The container <see cref="System.Web.UI.Control"/> to search.</param>
+        /// <returns>The list of T's or any of its subtypes.</returns>
+        public static IEnumerable<T> List<T>(Control container)
+        {
+            var list = new List<Control>();
+
+            return List(list, container, typeof(T)).Cast<T>();
         }
 
         /// <summary>

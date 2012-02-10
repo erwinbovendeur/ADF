@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Adf.Base.Panels;
 using Adf.Core.Extensions;
 using Adf.Core.Objects;
 using Adf.Core.Panels;
@@ -22,6 +23,8 @@ namespace Adf.Web.Panels
 
         public object Render(AdfPanel panel)
         {
+            if (panel.Rows.Count == 0) return null;
+
             var table = new Table { CssClass = PanelStyle};
 
             int cellsperrow = panel.GetMaxItemsPerRow() * 2;
@@ -41,13 +44,13 @@ namespace Adf.Web.Panels
                     {
                         if (!item.Label.IsNullOrEmpty())
                         {
-                            var labelcell = new TableCell {CssClass = LabelCellStyle};
+                            var labelcell = new TableCell { ID = "panelLabelItem_" + item.GetPropertyName(), CssClass = LabelCellStyle };
 
                             labelcell.Controls.AddRange(labels);
                             row.Controls.Add(labelcell);
                         }
 
-                        itemcell = new TableCell {CssClass = ItemCellStyle};
+                        itemcell = new TableCell { ID = "panelControlItem_" + item.GetPropertyName(), CssClass = ItemCellStyle };
                     }
 
                     itemcell.Controls.AddRange(items);
@@ -64,9 +67,9 @@ namespace Adf.Web.Panels
 
         private IEnumerable<Control> RenderItem(PanelItem panelItem)
         {
-            foreach (var renderer in Renderers)
+            foreach (var renderer in Renderers.Where(renderer => renderer.CanRender(panelItem.Type)))
             {
-                if (renderer.CanRender(panelItem.Type)) return (IEnumerable<Control>) renderer.Render(panelItem);
+                return renderer.Render(panelItem).Cast<Control>();
             }
             return new List<Control>();
         }
@@ -77,7 +80,7 @@ namespace Adf.Web.Panels
 
             if (!panelItem.Label.IsNullOrEmpty())
             {
-                controls.Add(new Label {Text = ResourceManager.GetString(panelItem.Label), CssClass = LabelStyle});
+                controls.Add(new Label { ID = "itemLabel_" + panelItem.GetPropertyName(), Text = ResourceManager.GetString(panelItem.Label), CssClass = LabelStyle });
                 
                 if (!panelItem.Optional) controls.Add(new Label { Text = @" *", CssClass = "Mandatory"});
             }

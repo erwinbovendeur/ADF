@@ -33,7 +33,7 @@ namespace Adf.Web.UI
         /// </summary>
         protected bool _visible = true;
 
-        private static readonly IStyler _styler = ObjectFactory.BuildUp<IStyler>("SmartPanelDefaultStyler");
+        private static IStyler _styler;
 
         /// <summary>
         /// Gets the identifier of the pannel.
@@ -62,7 +62,7 @@ namespace Adf.Web.UI
         /// Gets the style of a control within the panel.
         /// </summary>
         /// <returns>The style of a control within the panel.</returns>
-        public virtual IStyler Styler { get { return _styler; } }
+        public virtual IStyler Styler { get { return _styler ?? (_styler = ObjectFactory.BuildUp<IStyler>("SmartPanelDefaultStyler")); } }
 
         /// <summary>
         /// Gets or sets the visibility of controls within the panel.

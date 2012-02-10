@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 using Adf.Core.Domain;
 using Adf.Core.Identity;
@@ -34,8 +35,6 @@ namespace Adf.Core.Extensions
 
             return -1;
         }
-
-
 
         /// <summary>
         /// Converts a specified list to a string using the specified separator.
@@ -102,6 +101,14 @@ namespace Adf.Core.Extensions
             while (enumerator.MoveNext()) result++;
             
             return result;
+        }
+
+        public static void ForEach<T>(this IEnumerable<T> enumerable, Action<T> action)
+        {
+            foreach (T t in enumerable)
+            {
+                action.Invoke(t);
+            }
         }
     }
 }

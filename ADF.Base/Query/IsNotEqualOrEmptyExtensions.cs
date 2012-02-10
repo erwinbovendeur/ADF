@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Adf.Core;
 using Adf.Core.Data;
 using Adf.Core.Domain;
